@@ -1,7 +1,8 @@
 import logging
-import ipyparams
 from pathlib import Path
+from IPython import get_ipython
 from IPython.display import display, HTML
+from IPython import get_ipython
 
 
 class DisplayLogsHandler(logging.Handler):
@@ -33,14 +34,13 @@ class HTMLLogsFormatter(logging.Formatter):
 
 class FancyLogger:    
     def __init__(self, default_log_level='INFO'):
-        self._logger = logging.getLogger()
-        self._console_handler = DisplayLogsHandler()
-        self._file_handler = logging.FileHandler(f'{Path(ipyparams.notebook_name).stem}.log')
-        self._console_handler.setFormatter(HTMLLogsFormatter())
-        self._file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
-        self._logger.addHandler(console_handler)    
-        self._logger.addHandler(file_handler) 
-        self.set_log_level(default_log_level)
+        self._logger = logging.getLogger('thunder')
+        if not self._logger.handlers:
+            if get_ipython() is not None:
+                self._console_handler = DisplayLogsHandler()
+                self._console_handler.setFormatter(HTMLLogsFormatter())
+                self._logger.addHandler(self._console_handler)    
+            self.set_log_level(default_log_level)
         
     def _parse_log_level(self, log_level):
         if  log_level.upper() == 'DEBUG':
@@ -66,3 +66,27 @@ class FancyLogger:
         
     def log(self, message):
         self._logger.log(self._log_level, message)
+        
+    def debug(self, message):
+        self._logger.debug(message)
+        
+    def info(self, message):
+        self._logger.info(message)
+        
+    def warn(self, message):
+        self._logger.warning(message)
+    
+    def error(self, message):
+        self._logger.error(message)
+    
+    def crit(self, message):
+        self._logger.critical(message)
+        
+        
+def print(*args, sep=' ', end=None):
+    global __PRINT_LOGGER__
+    if '__PRINT_LOGGER__' not in globals():
+        __PRINT_LOGGER__ = FancyLogger()
+    if end:
+        __PRINT_LOGGER__.warn('the end argument is not supported')
+    __PRINT_LOGGER__.info(sep.join([str(val) for val in args]))

@@ -1,1 +1,1 @@
-from thunder.fancylogger import FancyLogger
+from thunder.fancylogger import FancyLogger, print
