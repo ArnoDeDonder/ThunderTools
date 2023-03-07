@@ -15,7 +15,8 @@ SPECIAL_PACKAGE_MAPPINGS = {
     'thunder': 'thundertools',
     'pil': 'pillow',
     'cv2': 'opencv-python',
-    'klassifai': 'klassifai-generic-library'
+    'klassifai': 'klassifai-generic-library',
+    'sklearn': 'scikit-learn'
 }
 
 
