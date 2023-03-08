@@ -20,10 +20,10 @@ else:
     clear = _clear_terminal
 
 
-def _filepicker_in_dir(dir_path):
+def _filepicker_in_dir(name, dir_path):
     clear()
     files_in_dir = ['.', '..'] + list(dir_path.iterdir())
-    print(f'NAVIGATE')
+    print(f'NAVIGATE TO {name.upper()}')
     for i, path in enumerate(files_in_dir, 1):
         print(f'{str(i).ljust(2)}  {"◆" if Path(path).is_dir() else "◇"}  {Path(path).name if path != "." else "." }')
     sleep(0.1)
@@ -34,16 +34,16 @@ def _filepicker_in_dir(dir_path):
         assert choice <= len(files_in_dir)
         return files_in_dir[choice - 1]
     except (ValueError, AssertionError):
-        return _filepicker_in_dir(dir_path)
+        return _filepicker_in_dir(name, dir_path)
     
 
 
-def filepicker(start_dir, file_type='FILE'):
+def filepicker(name, start_dir, file_type='FILE'):
     assert file_type in ['FILE', 'DIR'], 'valid filetypes: FILE, DIR'
     current_dir = Path(start_dir).absolute()
     target_found = False
     while not target_found:
-        chosen_file = _filepicker_in_dir(current_dir)
+        chosen_file = _filepicker_in_dir(name, current_dir)
         print(chosen_file)
         if file_type == 'FILE':
             if (current_dir / chosen_file).is_file():
