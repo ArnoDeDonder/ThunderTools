@@ -19,10 +19,12 @@ else:
     clear = _clear_terminal
 
 
-def _filepicker_in_dir(name, dir_path, multiple, out_length):
+def _filepicker_in_dir(name, dir_path, multiple, out_length, file_type):
     clear()
     files_in_dir = ['.', '..'] + list(dir_path.iterdir())
-    print(f'NAVIGATE TO {name.upper()} {f"({out_length})" if multiple else ""}', end='\n\n')
+    if file_type == 'DIR':
+        files_in_dir = [file for file in files_in_dir if Path(file).is_dir()]  # only look at directories in this flow
+    print(f'NAVIGATE TO {name.upper()} {f"({out_length}). Press ENTER to finish" if multiple else ""}', end='\n\n')
     print(f'》{dir_path}')
     for i, path in enumerate(files_in_dir, 1):
         print(f'{str(i).ljust(2)}  {"◆" if Path(path).is_dir() else "◇"}  {Path(path).name if path != "." else "." }')
@@ -30,9 +32,9 @@ def _filepicker_in_dir(name, dir_path, multiple, out_length):
     choice = input(f'[{1}-{len(files_in_dir)}] : ')
     try:
         if choice == '':
+            if multiple:
+                return ''
             return '.'
-        if multiple and choice == 'q':
-            return 'q'
         choice = int(choice)
         assert choice >= 1
         assert choice <= len(files_in_dir)
@@ -44,10 +46,14 @@ def _filepicker_in_dir(name, dir_path, multiple, out_length):
 def filepicker(name, start_dir, file_type='FILE', multiple=False):
     assert file_type in ['FILE', 'DIR'], 'valid filetypes: FILE, DIR'
     current_dir = Path(start_dir).absolute()
-    out_value = None if not multiple else []
+    out_value = '' if not multiple else []
     while True:
-        chosen_file = _filepicker_in_dir(name, current_dir, multiple, len(out_value))
-        if multiple and chosen_file == 'q':
+        chosen_file = _filepicker_in_dir(name=name,
+                                         dir_path=current_dir,
+                                         multiple=multiple,
+                                         out_length=len(out_value),
+                                         file_type=file_type)
+        if multiple and chosen_file == '':
             break
         if file_type == 'FILE':
             if (current_dir / chosen_file).is_file():
@@ -68,6 +74,7 @@ def filepicker(name, start_dir, file_type='FILE', multiple=False):
                 out_value = current_dir
                 break
             out_value.append(current_dir)
+            current_dir=current_dir.parent
             continue
         if chosen_file == '..':
             current_dir = current_dir.parent
