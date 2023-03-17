@@ -1,8 +1,12 @@
+import sys
 import logging
 from pathlib import Path
 from IPython import get_ipython
 from IPython.display import display, HTML
-from IPython import get_ipython
+from thunder.tools import get_shell_type
+
+
+SHELL_TYPE = get_shell_type()
 
 
 class DisplayLogsHandler(logging.Handler):
@@ -36,10 +40,14 @@ class FancyLogger:
     def __init__(self, default_log_level='INFO'):
         self._logger = logging.getLogger('thunder')
         if not self._logger.handlers:
-            if get_ipython() is not None:
+            if SHELL_TYPE in ['JUPYTER', 'IPYTHON']:
                 self._console_handler = DisplayLogsHandler()
                 self._console_handler.setFormatter(HTMLLogsFormatter())
                 self._logger.addHandler(self._console_handler)    
+            else:
+                self._stream_handler = logging.StreamHandler(sys.stdout)
+                self._stream_handler.setFormatter(logging.Formatter("[%(levelname)s]  %(message)s"))
+                self._logger.addHandler(self._stream_handler)
             self.set_log_level(default_log_level)
         
     def _parse_log_level(self, log_level):
