@@ -23,7 +23,7 @@ def numberpicker(name, default_value):
     while out_value == None:
         clear()
         print(f'Select: {name.upper()}')
-        sleep(0.1)
+        sleep(0.2)
         choice = input(f'Default [{default_value}] : ')
         if choice == '':
             out_value = default_value

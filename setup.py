@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='thundertools',
-    version='0.3.3',
+    version='0.4.1',
     author='Arno De Donder',
     author_email='arno.dedonder@hotmail.com',
     description='Different tools for working with jupuyter notebooks',
