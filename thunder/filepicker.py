@@ -40,12 +40,13 @@ def _filepicker_in_dir(name, dir_path, multiple, out_length, file_type):
         assert choice <= len(files_in_dir)
         return files_in_dir[choice - 1]
     except (ValueError, AssertionError):
-        return _filepicker_in_dir(name, dir_path)
+        return _filepicker_in_dir(name, dir_path, multiple, out_length, file_type)
 
 
 def filepicker(name, start_dir, file_type='FILE', multiple=False):
     assert file_type in ['FILE', 'DIR'], 'valid filetypes: FILE, DIR'
     current_dir = Path(start_dir).absolute()
+    current_dir.mkdir(parents=True, exist_ok=True)
     out_value = '' if not multiple else []
     while True:
         chosen_file = _filepicker_in_dir(name=name,
