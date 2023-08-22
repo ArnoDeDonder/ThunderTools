@@ -27,7 +27,7 @@ def _filepicker_in_dir(name: str, start_dir_path: Path, file_type: str, multiple
     if file_type == 'DIR':
         files_in_dir = [file for file in files_in_dir if Path(file).is_dir()]  # only look at directories in this flow
     print(f'NAVIGATE TO {name.upper()} '
-          f'{"(PRECEDE WITH s TO SELECT THE DIRECTORY)" if file_type == "DIR" and multiple else ""}',
+          f'{"(PRECEDE WITH s TO SELECT THE DIRECTORY)" if file_type == "DIR" else ""}',
           end='\n\n')
     print(f'》{start_dir_path}')
     for i, path in enumerate(files_in_dir, 1):
@@ -57,7 +57,7 @@ def filepicker(name, start_dir, file_type='FILE', multiple=False):
                                                      start_dir_path=current_dir,
                                                      file_type=file_type,
                                                      multiple=multiple)
-        if file_type == 'FILE' and chosen_file.is_dir() or not select_dir:
+        if (file_type == 'FILE' and chosen_file.is_dir()) or (file_type == 'DIR' and not select_dir):
             current_dir = chosen_file
             continue
         if multiple:
