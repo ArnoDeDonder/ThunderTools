@@ -38,7 +38,7 @@ from thunder.tools import get_current_formatted_datetime
 print(get_current_formatted_datetime())
 ```
 
-#### Stylish logging with datetime and log level
+### Stylish logging with datetime and log level
 ```python
 from thunder import FancyLogger
 
@@ -99,4 +99,10 @@ model_path = filepicker('the model path',
                         multiple=False)
 
 print(f'model path: {model_path}')
+```
+
+### ThunderCredentials
+```python
+from thunder import ThunderCredentials
+credentials = ThunderCredentials('name')
 ```
