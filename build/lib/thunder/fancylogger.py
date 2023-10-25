@@ -1,9 +1,14 @@
+import os
 import sys
 import logging
 
 from colorama import Fore
 
 from thunder.tools import get_current_formatted_datetime
+
+
+_raise_error = os.environ.get('LOGGER_DIE_ON_ERROR', 'false').lower()
+EXIT_ON_ERROR_LOGS = _raise_error == 'true'
 
 
 class FancyLogsFormatter(logging.Formatter):
@@ -71,9 +76,13 @@ class FancyLogger:
     
     def error(self, message):
         self._logger.error(message)
+        if EXIT_ON_ERROR_LOGS:
+            raise SystemExit(f'[ERROR EXIT]: {message}')
     
     def crit(self, message):
         self._logger.critical(message)
+        if EXIT_ON_ERROR_LOGS:
+            raise SystemExit(f'[CRITICAL EXIT]: {message}')
 
     def critical(self, message):
         self.crit(message)
