@@ -2,11 +2,13 @@ README.md
 setup.py
 thunder/__init__.py
 thunder/boolpicker.py
+thunder/citer.py
 thunder/enumpicker.py
 thunder/export_conda.py
 thunder/fancylogger.py
 thunder/filepicker.py
 thunder/numberpicker.py
+thunder/repr_dict.py
 thunder/stringpicker.py
 thunder/thunder_credentials.py
 thunder/tools.py
