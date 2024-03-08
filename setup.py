@@ -14,7 +14,7 @@ setup(
     description='Different tools for working in Python',
     licence='MIT',
     url='https://github.com/ArnoDeDonder/ThunderTools',
-    keywords=['python', 'tools', 'utility', 'shell', 'terminal', 'scripts', 'linux'],
+    keywords=['python', 'tools', 'utility', 'shell', 'terminal', 'scripts', 'linux', 'tqdm', 'zip'],
     packages=find_packages(),
     install_requires=requirements,
     tests_require=[

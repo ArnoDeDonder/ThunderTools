@@ -13,6 +13,7 @@ thunder/stringpicker.py
 thunder/thunder_credentials.py
 thunder/tools.py
 thunder/version.py
+thunder/zipit.py
 thundertools.egg-info/PKG-INFO
 thundertools.egg-info/SOURCES.txt
 thundertools.egg-info/dependency_links.txt

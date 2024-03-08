@@ -50,4 +50,4 @@ def get_system_name():
 
 
 def get_current_formatted_datetime():
-    return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    return datetime.now().strftime("%Y/%m/%d %H:%M:%S")

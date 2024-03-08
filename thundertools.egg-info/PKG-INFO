@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: thundertools
-Version: 0.7.3
+Version: 0.8.1
 Summary: Different tools for working in Python
 Home-page: https://github.com/ArnoDeDonder/ThunderTools
 Author: Arno De Donder
 Author-email: arno.dedonder@hotmail.com
 License: MIT
-Keywords: python,tools,utility,shell,terminal,scripts,linux
+Keywords: python,tools,utility,shell,terminal,scripts,linux,tqdm,zip
 Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: 3.9
 Classifier: Programming Language :: Python :: 3.10
