@@ -8,6 +8,7 @@ thunder/export_conda.py
 thunder/fancylogger.py
 thunder/filepicker.py
 thunder/numberpicker.py
+thunder/profiler.py
 thunder/repr_dict.py
 thunder/stringpicker.py
 thunder/thunder_credentials.py
