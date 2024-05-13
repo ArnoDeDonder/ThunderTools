@@ -6,10 +6,11 @@ import functools
 
 
 class Profiler:
-    def __init__(self, auto_report: bool = True) -> None:
+    def __init__(self, auto_report: bool = True, ignore_duplicate: bool = False) -> None:
         self.profiles: DefaultDict[str, Dict[str, float]] = defaultdict(lambda: {'count': 0, 'total_time': 0})
         self.active_profiles: Dict[str, float] = {}
-        self.auto_report = auto_report
+        self.auto_report: bool = auto_report
+        self.ignore_duplicate: bool = ignore_duplicate
         if self.auto_report:
             atexit.register(self.report)
 
@@ -31,6 +32,8 @@ class Profiler:
 
     def start(self, name: str) -> None:
         if name in self.active_profiles:
+            if self.ignore_duplicate:
+                return
             raise ValueError(f"Profile '{name}' is already running.")
         self.active_profiles[name] = time()
 
