@@ -13,7 +13,7 @@ def _format_seconds_to_hms(seconds):
     return "{:02d}:{:02d}:{:02d}".format(int(h), int(m), int(round(s)))
 
 
-def citer(items: Iterable, block_amount=50, iterator_log_interval=100):  # Count ITERation
+def citer(items: Iterable, block_amount=50, iterator_log_interval=100, stack: bool = True):  # Count ITERation
     start_time = time()
     iteration_durations = []
     try:
@@ -38,7 +38,10 @@ def citer(items: Iterable, block_amount=50, iterator_log_interval=100):  # Count
                 f'({str(i).ljust(len(str(item_amount)))} / {item_amount}) : '
                 + block_to_print * BLOCK_SYMBOL + non_blocks_to_print * NON_BLOCK_SYMBOL
                 + f' - ETA: {"∞" if not iteration_durations else (datetime.fromtimestamp(start_time + total_iteration_time)).replace(microsecond=0)}'
-                + f' [{_format_seconds_to_hms(time_elapsed)}<{_format_seconds_to_hms(total_iteration_time)}]'
+                + f' [{_format_seconds_to_hms(time_elapsed)}<{_format_seconds_to_hms(total_iteration_time)}]',
+                end='\n' if stack else '\r'
             )
         yield item
         iteration_durations.append(time() - iteration_start_time)
+    if not stack:
+        print('\n')
